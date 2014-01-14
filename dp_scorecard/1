@@ -1,0 +1,57 @@
+#include <map>
+#include <set>
+#include <list>
+#include <cmath>
+#include <ctime>
+#include <deque>
+#include <queue>
+#include <stack>
+#include <bitset>
+#include <cstdio>
+#include <limits>
+#include <vector>
+#include <cstdlib>
+#include <numeric>
+#include <sstream>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+/* Head ends here */
+int sieve[20000];
+/* Tail starts here */
+int get_num_scorecard(int m,int total,int max)
+{
+  if(m==1 && total>max)
+    return 0;
+  if(m==1 && total<max)
+    return 1;
+  int sum = 0;
+  for(int i=0; i < max && total- i >= 0; i++)
+  {
+    sum+=get_num_scorecard(m-1,total-i,max);
+  }
+}
+int main() {
+    int _a_size;
+    cin >> _a_size;
+    cin.ignore (std::numeric_limits<std::streamsize>::max(), '\n'); 
+    
+    vector<int> a;
+    int _a_item;
+    int max;
+    int sum=0,total,m=0;
+    for(int _a_i=0; _a_i<_a_size; _a_i++) {
+        cin >> max;
+        sum = 0;
+        m=0;
+        for(int i=0; i<max; i++) {
+          cin >> _a_item;
+          a.push_back(_a_item);
+          if(_a_item != -1) sum+=_a_item;
+          else m++;
+        }
+        total = (max*(max-1))/2;
+        get_num_scorecard(m,total-sum,max);
+    }
+    return 0;
+}
